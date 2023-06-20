@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import dj_database_url
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 
@@ -27,7 +28,7 @@ SECRET_KEY = 'Killol123'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['8000-killol14-firstecommerce-xwqtl4sy5kp.ws-eu100.gitpod.io']
+ALLOWED_HOSTS = ['8000-killol14-firstecommerce-1o41pp2tm3y.ws-eu100.gitpod.io']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -116,13 +117,17 @@ WSGI_APPLICATION = 'boutique_ado.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+if 'DATABASE_URL' in os.environ:
+    DATABASES = { 
+        'default': dj_database_url.parse(os.eniviron.get('DATABASE_URL'))
     }
-}
-
+else:    
+    DATABASES = {
+     'default': {
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+     }
+ }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
